@@ -1,29 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using SmsService.Models;
-using SmsService.Services;
+using SmsService.Contexts;
 using System.ComponentModel.DataAnnotations;
 
 namespace SmsService.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]/[action]")]
 public class SmsController : ControllerBase
 {
-    private readonly ISmsService _smsService;
+    private readonly ISmsServiceContext _smsService;
 
-    public SmsController(ISmsService smsService)
+    public SmsController(ISmsServiceContext smsServiceStrategy)
     {
-        _smsService = smsService;
+        _smsService = smsServiceStrategy;
     }
 
     [HttpPost]
     [ProducesResponseType<SuccessfulDto>(200)]
     [ProducesResponseType<FailedDto>(400)]
-    public async Task<IActionResult> SendSms([Required] string mobileNumber, [Required] string text)
+    public async Task<IActionResult> Send([Required] string mobileNumber, [Required] string text, ProviderStrategy providerStrategy)
     {
         try
         {
-            var response = await _smsService.SendSms(mobileNumber, text);
+            var response = await _smsService.SendSms(mobileNumber, text, providerStrategy);
 
             var result = new SuccessfulDto()
             {
