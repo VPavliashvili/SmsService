@@ -12,7 +12,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ISmsProviderStrategy, RandomProviderStrategy>();
 builder.Services.AddScoped<ISmsProviderStrategy, PercentProviderStrategy>();
-builder.Services.AddScoped<ISmsProviderStrategy, OtherProviderStrategy>();
+
+builder.Services.AddScoped<IProvider, MagtiSmsProvider>();
+builder.Services.AddScoped<IProvider, TwilioSmsProvider>();
+builder.Services.AddScoped<IProvider, GeocellSmsProvider>();
 
 builder.Services.AddScoped<ISmsServiceContext, SmsServiceContext>();
 

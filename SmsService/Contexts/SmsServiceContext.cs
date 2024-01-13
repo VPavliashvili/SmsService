@@ -5,7 +5,7 @@ namespace SmsService.Contexts;
 
 public class SmsServiceContext : ISmsServiceContext
 {
-    private readonly IEnumerable<ISmsProviderStrategy> _providers = [];
+    private readonly IEnumerable<ISmsProviderStrategy> _providers;
 
     public SmsServiceContext(IEnumerable<ISmsProviderStrategy> providers)
     {
@@ -14,10 +14,12 @@ public class SmsServiceContext : ISmsServiceContext
 
     public async Task<SendSmsResponse> SendSms(string mobileNumber, string text, ProviderStrategy requestedStrategy)
     {
-        var strategy = _providers.SingleOrDefault(x => x.Name == requestedStrategy)
-                                ?? throw new NullReferenceException();
+        var strategy = _providers.SingleOrDefault(x => x.StrategyName == requestedStrategy)
+                                ?? throw new InvalidOperationException();
 
-        var res = await strategy.SendSms(mobileNumber, text);
+        var provider = strategy.GetProvider();
+
+        var res = await provider.SendSms(mobileNumber, text);
 
         return res;
     }

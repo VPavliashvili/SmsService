@@ -3,6 +3,5 @@
 public enum ProviderStrategy
 {
     Random,
-    Percent,
-    Other
+    Percent
 }
