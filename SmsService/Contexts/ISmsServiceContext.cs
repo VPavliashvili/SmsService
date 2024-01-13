@@ -4,5 +4,5 @@ namespace SmsService.Contexts;
 
 public interface ISmsServiceContext
 {
-    Task<SendSmsResponse> SendSms(string mobileNumber, string text, ProviderStrategy requestedStrategy);
+    Task<SendSmsResponse> SendSms(SendSmsRequest request);
 }

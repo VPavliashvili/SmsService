@@ -13,7 +13,7 @@ public class RandomProviderStrategy : ISmsProviderStrategy
         _providers = providers.ToList();
     }
 
-    public IProvider GetProvider()
+    public IProvider GetProvider(SendSmsRequest _)
     {
         var rnd = new Random();
         var index = rnd.Next(0, _providers.Count);

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using SmsService.Models;
 using SmsService.Contexts;
-using System.ComponentModel.DataAnnotations;
+using SmsService.Models;
 
 namespace SmsService.Controllers;
 
@@ -11,21 +10,21 @@ public class SmsController : ControllerBase
 {
     private readonly ISmsServiceContext _smsService;
 
-    public SmsController(ISmsServiceContext smsServiceStrategy)
+    public SmsController(ISmsServiceContext smsService)
     {
-        _smsService = smsServiceStrategy;
+        _smsService = smsService;
     }
 
     [HttpPost]
-    [ProducesResponseType<SuccessfulDto>(200)]
-    [ProducesResponseType<FailedDto>(400)]
-    public async Task<IActionResult> Send([Required] string mobileNumber, [Required] string text, ProviderStrategy providerStrategy)
+    [ProducesResponseType<SuccessfulResponseDto>(200)]
+    [ProducesResponseType<FailedResponseDto>(400)]
+    public async Task<IActionResult> Send(SendSmsRequest request)
     {
         try
         {
-            var response = await _smsService.SendSms(mobileNumber, text, providerStrategy);
+            var response = await _smsService.SendSms(request);
 
-            var result = new SuccessfulDto()
+            var result = new SuccessfulResponseDto()
             {
                 Message = response.Message,
             };
@@ -34,7 +33,7 @@ public class SmsController : ControllerBase
         }
         catch (Exception ex)
         {
-            var err = new FailedDto()
+            var err = new FailedResponseDto()
             {
                 ErrorMessage = ex.Message,
             };

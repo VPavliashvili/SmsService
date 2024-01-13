@@ -5,5 +5,5 @@ namespace SmsService.Providers;
 public interface ISmsProviderStrategy
 {
     ProviderStrategy StrategyName { get; }
-    IProvider GetProvider();
+    IProvider GetProvider(SendSmsRequest request);
 }

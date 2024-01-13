@@ -1,3 +1,4 @@
+using SmsService.Configuration;
 using SmsService.Contexts;
 using SmsService.Providers;
 using System.Text.Json.Serialization;
@@ -9,6 +10,8 @@ builder.Services.AddControllers()
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.ConfigureOptions<SmsProviderConfigOptionsSetup>();
 
 builder.Services.AddScoped<ISmsProviderStrategy, RandomProviderStrategy>();
 builder.Services.AddScoped<ISmsProviderStrategy, PercentProviderStrategy>();

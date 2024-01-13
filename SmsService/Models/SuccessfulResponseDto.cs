@@ -1,6 +1,6 @@
 ﻿namespace SmsService.Models;
 
-public class SuccessfulDto
+public class SuccessfulResponseDto
 {
     public required string Message { get; set; }
 }

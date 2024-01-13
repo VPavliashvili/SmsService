@@ -5,21 +5,21 @@ namespace SmsService.Contexts;
 
 public class SmsServiceContext : ISmsServiceContext
 {
-    private readonly IEnumerable<ISmsProviderStrategy> _providers;
+    private readonly IEnumerable<ISmsProviderStrategy> _strategies;
 
-    public SmsServiceContext(IEnumerable<ISmsProviderStrategy> providers)
+    public SmsServiceContext(IEnumerable<ISmsProviderStrategy> strategies)
     {
-        _providers = providers;
+        _strategies = strategies;
     }
 
-    public async Task<SendSmsResponse> SendSms(string mobileNumber, string text, ProviderStrategy requestedStrategy)
+    public async Task<SendSmsResponse> SendSms(SendSmsRequest request)
     {
-        var strategy = _providers.SingleOrDefault(x => x.StrategyName == requestedStrategy)
+        var strategy = _strategies.SingleOrDefault(x => x.StrategyName == request.RequiredStrategy)
                                 ?? throw new InvalidOperationException();
 
-        var provider = strategy.GetProvider();
+        var provider = strategy.GetProvider(request);
 
-        var res = await provider.SendSms(mobileNumber, text);
+        var res = await provider.SendSms(request.MobileNumber, request.Text);
 
         return res;
     }
