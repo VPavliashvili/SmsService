@@ -7,6 +7,24 @@ Error-ს აბრუნებს ორ შემთხვევაში
 - თუ სტრატეგიად ავირჩევთ Percent-ს და ისეთ პროცენტს გადავცემთ რომელიც არ არის გაწერილი კონფიგში
 - თუ რექვესთის RequiredStrategy ველში გადავცემთ ისეთ მნიშვნელობას რომელიც არ არის ProviderStrategy enum-ში (System.Text.Json-ის ვალიდაციით არის ავტომატურად)
 
+აქვე ვურთავ რექვესთის მაგალითებს
+```json
+{
+  "mobileNumber": "123321",
+  "text": "string",
+  "requiredStrategy": "Random",
+  "targetPercent": 0
+}
+```
+```json
+{
+  "mobileNumber": "123321",
+  "text": "string",
+  "requiredStrategy": "Percent",
+  "targetPercent": 10
+}
+```
+
 ქვემოთ მოყვანილია class diagram
 
 ```mermaid
